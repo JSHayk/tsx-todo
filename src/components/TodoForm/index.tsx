@@ -1,60 +1,22 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
   ADD_LIST_ITEM,
   CHANGE_DONE_STATE,
   DELETE_LIST_ITEM,
   HIDE_COMPLATED,
 } from "../../constants/reducerActionTypes";
-import { ListItemInterface } from "../../interfaces/ListItemInterface";
+import { TodoFormReducer } from "../../store/TodoFormReducer";
 import "./index.scss";
 import TodoFormAdd from "./TodoAdd";
-import TodoHideComplated from "./TodoHideComplated";
+import TodoHideComplated from "./TodoHideComplated/index";
 import TodoList from "./TodoList";
 import TodoModal from "./TodoModal";
 
-const reducer = (
-  state: ListItemInterface[],
-  action: { type: string; payload: any }
-) => {
-  switch (action.type) {
-    case ADD_LIST_ITEM:
-      return [
-        ...state,
-        {
-          id: Date.now(),
-          taskName: action.payload,
-          isDone: false,
-          isHidden: false,
-        },
-      ];
-    case DELETE_LIST_ITEM:
-      return state.filter((item) => item.id !== action.payload);
-    case CHANGE_DONE_STATE:
-      return state.map((item) => {
-        if (item.id === action.payload) {
-          item.isDone = !item.isDone;
-        }
-        return item;
-      });
-    case HIDE_COMPLATED:
-      return state.map((item) => {
-        if (item.isDone) {
-          item.isHidden = !item.isHidden;
-        }
-        return item;
-      });
-    default:
-      break;
-  }
-
-  return state;
-};
-
 const TodoForm: React.FC = () => {
-  const [listItems, dispatch] = useReducer(reducer, []);
+  const [listItems, dispatch] = useReducer(TodoFormReducer, []);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentTodoId, setCurrentTodoId] = useState<number>();
-  const [isHideComplatedOpen, setIsHideComplatedOpen] = useState<boolean>(true);
+  const [isHideComplatedOpen, setIsHideComplatedOpen] = useState<boolean>(false);
 
   const onAdd = (taskName: string) => {
     dispatch({
@@ -83,12 +45,22 @@ const TodoForm: React.FC = () => {
     });
   };
 
-  const hideComplated = () => {
+  const hideComplated = (payloadState: boolean) => {
     dispatch({
       type: HIDE_COMPLATED,
-      payload: "",
+      payload: payloadState,
     });
   };
+
+  useEffect(() => {
+    setIsHideComplatedOpen(listItems.some(item => item.isDone === true));
+    console.log('active useeffect');
+    
+  }, [listItems]);
+
+  // const findComplated = () => {
+  //   listItems.some(item => item.isDone === true);
+  // }
 
   return (
     <div className="todo-form">

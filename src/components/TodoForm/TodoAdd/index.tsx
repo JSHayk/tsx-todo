@@ -22,6 +22,7 @@ const TodoFormAdd: React.FC<TodoFormAddInterface> = ({ onAdd }) => {
       setInputStyles({
         border: "1px solid #FF3104",
       });
+      setIsWarningTextShown(true);
     } else {
       setInputStyles({
         border: "1px solid #FFCD04",
@@ -33,10 +34,10 @@ const TodoFormAdd: React.FC<TodoFormAddInterface> = ({ onAdd }) => {
       func: () => {
         setTaskText(val);
         setIsWritten(true);
+        setIsPromptTextShown(false);
         setInputStyles({
           border: "1px solid #FFCD04",
         });
-        setIsPromptTextShown(false);
       },
     });
   };

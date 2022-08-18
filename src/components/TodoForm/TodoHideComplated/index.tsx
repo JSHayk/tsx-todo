@@ -13,7 +13,10 @@ const TodoHideComplated: React.FC<TodoHideComplatedInterface> = ({
   return (
     <div className="todo-hide-complated">
       <div
-        onClick={() => setIsActive((prev) => !prev)}
+        onClick={() => {
+          setIsActive((prev) => !prev);
+          hideComplated(!isActive);
+        }}
         style={isActive ? { backgroundColor: "#008594", border: "none" } : {}}
         className="todo-checkbox"
       >
