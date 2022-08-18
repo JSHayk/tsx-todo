@@ -1,0 +1,36 @@
+.todo-modal {
+  background: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-container {
+    border: none;
+    position: fixed;
+    background-color: #fff;
+    width: 400px;
+    height: 200px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    > .todo-modal-question {
+      font-size: 18px;
+      color: #008594;
+      font-weight: 600;
+      line-height: 28px;
+    }
+    .todo-modal-answer {
+      font-size: 18px;
+      font-weight: 600;
+      color: #174348;
+      margin: 18px 18px 0px 18px;
+      cursor: pointer;
+    }
+  }
+}

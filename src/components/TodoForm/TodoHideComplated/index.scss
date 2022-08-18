@@ -1,0 +1,13 @@
+.todo-hide-complated {
+  border: solid;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 24px;
+  > span {
+    margin-left: 16px;
+    color: #000000;
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
