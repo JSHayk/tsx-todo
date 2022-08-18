@@ -1,0 +1,2 @@
+export const ADD_LIST_ITEM = "ADD_LIST-ITEM";
+export const OPEN_DELETE_MODAL = "OPEN_DELETE_MODAL";
