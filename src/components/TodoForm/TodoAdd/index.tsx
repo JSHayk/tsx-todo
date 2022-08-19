@@ -30,7 +30,7 @@ const TodoFormAdd: React.FC<TodoFormAddInterface> = ({ onAdd }) => {
       setIsWarningTextShown(false);
     }
     debaunce({
-      ms: 1000,
+      ms: 700,
       func: () => {
         setTaskText(val);
         setIsWritten(true);

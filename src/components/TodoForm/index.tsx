@@ -4,7 +4,9 @@ import {
   CHANGE_DONE_STATE,
   DELETE_LIST_ITEM,
   HIDE_COMPLATED,
+  LOCAL_STORE_DATA,
 } from "../../constants/reducerActionTypes";
+import { ListItemInterface } from "../../interfaces/ListItemInterface";
 import { TodoFormReducer } from "../../store/TodoFormReducer";
 import "./index.scss";
 import TodoFormAdd from "./TodoAdd";
@@ -16,7 +18,8 @@ const TodoForm: React.FC = () => {
   const [listItems, dispatch] = useReducer(TodoFormReducer, []);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentTodoId, setCurrentTodoId] = useState<number>();
-  const [isHideComplatedOpen, setIsHideComplatedOpen] = useState<boolean>(false);
+  const [isHideComplatedOpen, setIsHideComplatedOpen] =
+    useState<boolean>(false);
 
   const onAdd = (taskName: string) => {
     dispatch({
@@ -53,14 +56,23 @@ const TodoForm: React.FC = () => {
   };
 
   useEffect(() => {
-    setIsHideComplatedOpen(listItems.some(item => item.isDone === true));
-    console.log('active useeffect');
-    
-  }, [listItems]);
+    const savedTasks = JSON.parse(
+      localStorage.getItem("listItems") || "[]"
+    ) as ListItemInterface[];
+    if (savedTasks) {
+      dispatch({
+        type: LOCAL_STORE_DATA,
+        payload: savedTasks,
+      });
+    }
+  }, []);
 
-  // const findComplated = () => {
-  //   listItems.some(item => item.isDone === true);
-  // }
+  useEffect(() => {
+    setIsHideComplatedOpen(
+      listItems.some((item: ListItemInterface) => item.isDone === true)
+    );
+    localStorage.setItem("listItems", JSON.stringify(listItems));
+  }, [listItems]);
 
   return (
     <div className="todo-form">
